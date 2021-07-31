@@ -20,7 +20,7 @@ public class TextWrapController {
     @PostMapping("wrap")
     public TextWrapResponse wrap(@RequestBody TextWrapRequest request) {
         return TextWrapResponse.builder()
-                .withText(textWrapService.wrap(request.getText()))
+                .withLines(textWrapService.wrap(request.getText()))
                 .build();
     }
 }

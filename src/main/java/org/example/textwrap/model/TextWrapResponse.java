@@ -1,5 +1,7 @@
 package org.example.textwrap.model;
 
+import java.util.List;
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Builder;
 import lombok.Value;
@@ -9,6 +11,6 @@ import lombok.Value;
 @JsonDeserialize(builder =  TextWrapResponse.TextWrapResponseBuilder.class)
 public class TextWrapResponse {
 
-    String text;
+    List<String> lines;
 
 }

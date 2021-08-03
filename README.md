@@ -37,16 +37,41 @@ See [Externalized Configuration chapter](https://docs.spring.io/spring-boot/docs
 
 ### Usage
 
-The application publishes a single http endpoint with JSON formatted communication.
+The application publishes a two http endpoint with JSON formatted communication.
 
-* Path: `textwrap/wrap`
+1. Submit line break task
+
+* Path: `/api/lineBreak`
 * Method: `POST`
 * Content-Type: `application/json`
-* Example request: `{ "text": "Some input text to be wrapped" }`
+* Example request: `"Some input text to be wrapped"`
+* Example response: `"961c635b-5104-4c1d-bb10-81d0f9834d0f"`
 
 Complete example using cURL:
 ```shell
-curl --location --request POST 'http://localhost:8080/textwrap/wrap' \
+curl --location --request POST 'http://localhost:8080/api/lineBreak' \
 --header 'Content-Type: application/json' \
---data-raw '{ "text": "Some input text to be wrapped" }'
+--data-raw '"Some input text to be wrapped"'
 ```
+
+Possible HTTP status codes:
+
+* `200 (OK)`: Line break task scheduled with the returned ID of the response body.
+* `400 (Bad request)`: The request is malformed.
+
+---
+
+2. Query status of line break task
+
+* Path: `/api/lineBreak/{id}`
+* Method: `GET`
+* Content-Type: `application/json`
+* Example path parameter: `"961c635b-5104-4c1d-bb10-81d0f9834d0f"`
+* Example response: `["Some input", "text to be", "wrapped"]`
+
+Possible HTTP status codes:
+
+* `200 (OK)`: Task completed and body contains the wrapped lines.
+* `202 (Accepted)`: Task is accepted and scheduled but not completed yet.
+* `404 (Not found)`: There is no task with the given ID.
+* `400 (Bad request)`: The request is malformed.
